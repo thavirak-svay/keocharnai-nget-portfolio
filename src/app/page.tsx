@@ -414,41 +414,57 @@ const Navbar = () => {
         </a>
         </div>
 
-        <button className="md:hidden text-[#2B2B2B] p-1" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="md:hidden text-black p-1 drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={24} strokeWidth={2.25} className="text-black" /> : <Menu size={24} strokeWidth={2.25} className="text-black" />}
         </button>
       </div>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#FFF5F7]/95 backdrop-blur-xl border-t border-pink-100 overflow-hidden absolute w-full left-0 z-40 shadow-xl"
-          >
-            <div className="flex flex-col p-6 gap-6 items-center">
-              {links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="font-syne text-2xl text-[#2B2B2B] hover:text-[#C21E56]"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
+          <>
+            <motion.div
+              key="mobile-nav-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.55 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 md:hidden bg-white/40 backdrop-blur-xl z-40"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              key="mobile-nav-panel"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white/75 border border-white/60 backdrop-blur-2xl overflow-hidden absolute w-full left-0 z-50 shadow-2xl shadow-[#C21E56]/20"
+              style={{
+                backdropFilter: "blur(18px) saturate(130%)",
+                WebkitBackdropFilter: "blur(18px) saturate(130%)",
+                backgroundImage: "linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,245,249,0.82) 100%)",
+              }}
+            >
+              <div className="flex flex-col p-6 gap-6 items-center">
+                {links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="font-syne text-2xl text-[#2B2B2B] hover:text-[#C21E56]"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
 
-              <a
-                href="https://t.me/char_nai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#C21E56] text-white font-syne font-bold px-8 py-3 rounded-full shadow-lg w-full max-w-xs text-center"
-              >
-                Let's Work
-              </a>
-            </div>
-          </motion.div>
+                <a
+                  href="https://t.me/char_nai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#C21E56] text-white font-syne font-bold px-8 py-3 rounded-full shadow-lg w-full max-w-xs text-center"
+                >
+                  Let's Work
+                </a>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
@@ -996,7 +1012,7 @@ const Newsletter = () => (
 
           <button
             type="submit"
-            className="bg-[#C21E56] text-white rounded-full p-2 md:p-3 hover:scale-105 transition-transform shadow-lg shadow-pink-500/20 flex items-center justify-center"
+            className="bg-[#C21E56] text-white rounded-full w-11 h-11 md:w-12 md:h-12 hover:scale-105 transition-transform shadow-lg shadow-pink-500/20 flex items-center justify-center shrink-0"
           >
             <Send size={18} className="shrink-0" />
           </button>
